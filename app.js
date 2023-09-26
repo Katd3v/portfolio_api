@@ -32,13 +32,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// middleware pour afficher les skills
-app.get("/skills", (req, res, next) => {
-  Skill.find()
-    .then((skill) => res.status(200).json(skill))
-    .catch((error) => res.status(400).json({ error }));
-});
-
 // middleware pour créer les skills
 app.post("/skills", (req, res, next) => {
   const skill = new Skill(req.body);
@@ -50,6 +43,13 @@ app.post("/skills", (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 });
 
+// middleware pour afficher les skills
+app.get("/skills", (req, res, next) => {
+  Skill.find()
+    .then((skill) => res.status(200).json(skill))
+    .catch((error) => res.status(400).json({ error }));
+});
+
 // middleware pour creer un projet
 app.post("/projects", (req, res, next) => {
   const project = new Project(req.body);
@@ -58,6 +58,13 @@ app.post("/projects", (req, res, next) => {
     .then(() =>
       res.status(201).json({ message: "Le projet a bien été enregistrée" })
     )
+    .catch((error) => res.status(400).json({ error }));
+});
+
+// middleware pour afficher un projet
+app.get("/projects", (req, res, next) => {
+  Project.find()
+    .then((project) => res.status(200).json(project))
     .catch((error) => res.status(400).json({ error }));
 });
 
