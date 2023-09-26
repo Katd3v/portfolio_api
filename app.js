@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-const skill = require("./models/Skill");
+const Skill = require("./models/Skill");
+const { log } = require("console");
 
 const app = express();
 
@@ -28,6 +29,22 @@ app.use((req, res, next) => {
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
   next();
+});
+
+app.get("/skills", (req, res, next) => {
+  Skill.find()
+    .then((skill) => res.status(200).json(skill))
+    .catch((error) => res.status(400).json({ error }));
+});
+
+app.post("/skills", (req, res, next) => {
+  const skill = new Skill(req.body);
+  skill
+    .save()
+    .then(() =>
+      res.status(201).json({ message: "La compétence à bien été enregistrée" })
+    )
+    .catch((error) => res.status(400).json({ error }));
 });
 
 module.exports = app;
