@@ -4,7 +4,7 @@ const projectSchema = mongoose.Schema({
   title: { type: String, required: true },
   imageUrl: { type: String, required: true },
   pageUrl: { type: String, required: true },
-  gitHub: { type: String, required: true },
+  github: { type: String, required: true },
   languages: { type: Array, required: true },
 });
 
