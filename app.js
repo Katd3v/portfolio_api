@@ -1,6 +1,17 @@
 const express = require("express");
+const mongoose = require("mongoose");
+
 const app = express();
 
+mongoose
+  .connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("Connexion à MongoDB réussie !"))
+  .catch(() => console.log("Connexion à MongoDB échouée !"));
+
+// Extraction du corps JSON afin de gérer la requête POST venant de l'application front-end
 app.use(express.json());
 
 // Gestion des erreurs CORS
