@@ -44,10 +44,29 @@ app.post("/skills", (req, res, next) => {
 });
 
 // middleware pour afficher les skills
-app.get("/skills", (req, res, next) => {
-  Skill.find()
-    .then((skill) => res.status(200).json(skill))
-    .catch((error) => res.status(400).json({ error }));
+app.get("/skills", async (req, res, next) => {
+  try {
+    // Récupérer les compétences depuis la base de données par categorie
+    const languages = await Skill.find({ category: "language" }).exec();
+    const frameworks = await Skill.find({ category: "framework" }).exec();
+    const tools = await Skill.find({ category: "tool" }).exec();
+
+    // Créer l'objet de réponse
+    const skills = {
+      languages,
+      frameworks,
+      tools,
+    };
+
+    // Renvoyer l'objet en tant que réponse JSON
+    res.status(200).json(skills);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error:
+        "Une erreur s'est produite lors de la récupération des compétences.",
+    });
+  }
 });
 
 // middleware pour creer un projet
