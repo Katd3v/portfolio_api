@@ -88,6 +88,7 @@ app.get("/projects", (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 });
 
+// créer une route statique pour les images
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 module.exports = app;
