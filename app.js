@@ -48,16 +48,12 @@ app.post("/skills", (req, res, next) => {
 app.get("/skills", async (req, res, next) => {
   try {
     // Récupérer les compétences depuis la base de données par categorie
-    const languages = await Skill.find({ category: "language" }).exec();
-    const frameworks = await Skill.find({ category: "framework" }).exec();
-    const tools = await Skill.find({ category: "tool" }).exec();
+    const languages = await Skill.find({ category: "Langages" }).exec();
+    const frameworks = await Skill.find({ category: "Frameworks" }).exec();
+    const tools = await Skill.find({ category: "Outils" }).exec();
 
     // Créer l'objet de réponse
-    const skills = {
-      languages,
-      frameworks,
-      tools,
-    };
+    const skills = [languages, frameworks, tools];
 
     // Renvoyer l'objet en tant que réponse JSON
     res.status(200).json(skills);
