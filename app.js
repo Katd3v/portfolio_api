@@ -1,10 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-const Skill = require("./models/Skill");
-const Project = require("./models/Project");
-const { log } = require("console");
 const path = require("path");
+const projectRoutes = require("./routes/project");
+const skillRoutes = require("./routes/skill");
 
 const app = express();
 
@@ -33,56 +32,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// middleware pour créer les skills
-app.post("/skills", (req, res, next) => {
-  const skill = new Skill(req.body);
-  skill
-    .save()
-    .then(() =>
-      res.status(201).json({ message: "La compétence à bien été enregistrée" })
-    )
-    .catch((error) => res.status(400).json({ error }));
-});
-
-// middleware pour afficher les skills
-app.get("/skills", async (req, res, next) => {
-  try {
-    // Récupérer les compétences depuis la base de données par categorie
-    const languages = await Skill.find({ category: "Langages" }).exec();
-    const frameworks = await Skill.find({ category: "Frameworks" }).exec();
-    const tools = await Skill.find({ category: "Outils" }).exec();
-
-    // Créer l'objet de réponse
-    const skills = [languages, frameworks, tools];
-
-    // Renvoyer l'objet en tant que réponse JSON
-    res.status(200).json(skills);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      error:
-        "Une erreur s'est produite lors de la récupération des compétences.",
-    });
-  }
-});
-
-// middleware pour creer un projet
-app.post("/projects", (req, res, next) => {
-  const project = new Project(req.body);
-  project
-    .save()
-    .then(() =>
-      res.status(201).json({ message: "Le projet a bien été enregistrée" })
-    )
-    .catch((error) => res.status(400).json({ error }));
-});
-
-// middleware pour afficher un projet
-app.get("/projects", (req, res, next) => {
-  Project.find()
-    .then((project) => res.status(200).json(project))
-    .catch((error) => res.status(400).json({ error }));
-});
+app.use("/skills", skillRoutes);
+app.use("/projects", projectRoutes);
 
 // créer une route statique pour les images
 app.use("/images", express.static(path.join(__dirname, "images")));
