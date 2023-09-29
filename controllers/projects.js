@@ -1,7 +1,14 @@
+const { log } = require("console");
+
 const Project = require("../models/Project");
 
 exports.createProject = (req, res, next) => {
-  const project = new Project(req.body);
+  const project = new Project({
+    ...req.body,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${
+      req.file.filename
+    }`,
+  });
   project
     .save()
     .then(() =>
