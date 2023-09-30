@@ -1,11 +1,18 @@
+const { log } = require("console");
+
 const Project = require("../models/Project");
 
 exports.createProject = (req, res, next) => {
-  const project = new Project(req.body);
+  const project = new Project({
+    ...req.body,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${
+      req.file.filename
+    }`,
+  });
   project
     .save()
     .then(() =>
-      res.status(201).json({ message: "Le projet a bien été enregistrée" })
+      res.status(201).json({ message: "Le projet a bien été enregistré" })
     )
     .catch((error) => res.status(400).json({ error }));
 };
