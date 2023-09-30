@@ -12,7 +12,7 @@ exports.createProject = (req, res, next) => {
   project
     .save()
     .then(() =>
-      res.status(201).json({ message: "Le projet a bien été enregistrée" })
+      res.status(201).json({ message: "Le projet a bien été enregistré" })
     )
     .catch((error) => res.status(400).json({ error }));
 };
