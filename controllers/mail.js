@@ -26,6 +26,7 @@ exports.sendMail = (req, res, next) => {
     if (error) {
       return console.log(error);
     }
+    console.log(info);
     res.status(200).send({ message: "Mail envoyé" });
   });
 };
