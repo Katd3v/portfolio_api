@@ -1,9 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 
 const path = require("path");
 const projectRoutes = require("./routes/project");
 const skillRoutes = require("./routes/skill");
+const mailRoutes = require("./routes/mail");
 
 const app = express();
 
@@ -17,6 +19,10 @@ mongoose
 
 // Extraction du corps JSON afin de gérer la requête POST venant de l'application front-end
 app.use(express.json());
+
+// Middleware pour analyser le corps des requêtes en JSON
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Gestion des erreurs CORS
 app.use((req, res, next) => {
@@ -34,6 +40,7 @@ app.use((req, res, next) => {
 
 app.use("/skills", skillRoutes);
 app.use("/projects", projectRoutes);
+app.use("/mail", mailRoutes);
 
 // créer une route statique pour les images
 app.use("/images", express.static(path.join(__dirname, "images")));
