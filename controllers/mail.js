@@ -12,14 +12,14 @@ const transporter = nodemailer.createTransport({
 });
 
 exports.sendMail = (req, res, next) => {
-  const { email, name, firstname, message } = req.body;
+  const { email, name, firstName, message } = req.body;
   const mailData = {
     from: email,
     to: process.env.EMAIL,
     subject: "Contact via le portfolio",
     name: name,
-    firstname: firstname,
-    text: message,
+    firstName: firstName,
+    text: `Nom : ${name}, Prénom : ${firstName}, Mail : ${email}, Message : ${message}`,
   };
 
   transporter.sendMail(mailData, (error, info) => {
