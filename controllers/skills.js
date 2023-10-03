@@ -1,7 +1,12 @@
 const Skill = require("../models/Skill");
 
 exports.createSkill = (req, res, next) => {
-  const skill = new Skill(req.body);
+  const skill = new Skill({
+    ...req.body,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${
+      req.file.filename
+    }`,
+  });
   skill
     .save()
     .then(() =>
