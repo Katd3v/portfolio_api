@@ -4,7 +4,8 @@ const fs = require("fs");
 module.exports = (req, res, next) => {
   const refImg = `${req.file.filename.split(".")[0]}.webp`;
   sharp(req.file.path)
-    .webp({ quality: 20 })
+    .webp({ quality: 50 })
+    .resize({ width: 320, height: 320 })
     .toFile(`images/${refImg}`, (err) => {
       if (err) {
         res
