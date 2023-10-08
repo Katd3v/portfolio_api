@@ -10,7 +10,7 @@ exports.createProject = async (req, res, next) => {
     const foundSkills = await Skill.find({ title: { $in: languageNames } });
 
     //récupérer les images des compétences trouvées
-    const languageImage = foundSkills.map((skill) => skill.imageUrl);
+    const languageImage = foundSkills.map((skill) => skill.iconeLogo);
 
     //créer le nouveau projet
     const project = new Project({

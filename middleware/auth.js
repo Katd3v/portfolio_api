@@ -6,7 +6,6 @@ const authToken = process.env.TOKEN;
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    console.log(token);
     if (token === authToken) {
       next(); // Token valide, autorise la demande
     }
